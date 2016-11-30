@@ -33,42 +33,7 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    if ! package_is_installed "google-chrome-unstable"; then
-
-        add_key "https://dl-ssl.google.com/linux/linux_signing_key.pub" \
-            || print_error "Chrome Canary (add key)"
-
-        add_to_source_list "[arch=amd64] https://dl.google.com/linux/deb/ stable main" "google-chrome.list" \
-            || print_error "Chrome Canary (add to package resource list)"
-
-        update &> /dev/null \
-            || print_error "Chrome Canary (resync package index files)"
-
-    fi
-
-    install_package "Chrome Canary" "google-chrome-unstable"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    install_package "Chromium" "chromium-browser"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     install_package "cURL" "curl"
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    if ! package_is_installed "firefox-trunk"; then
-
-        add_ppa "ubuntu-mozilla-daily/ppa" \
-            || print_error "Firefox Nightly (add PPA)"
-
-        update &> /dev/null \
-            || print_error "Firefox Nightly (resync package index files)" \
-
-    fi
-
-    install_package "Firefox Nightly" "firefox-trunk"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -112,16 +77,6 @@ install_apps() {
         | sudo debconf-set-selections
 
     install_package "Opera" "opera-stable"
-
-    printf "opera-beta opera-beta/add-deb-source boolean true\n" \
-        | sudo debconf-set-selections
-
-    install_package "Opera Beta" "opera-beta"
-
-    printf "opera-developer opera-developer/add-deb-source boolean true\n" \
-        | sudo debconf-set-selections
-
-    install_package "Opera Developer" "opera-developer"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
